@@ -74,8 +74,7 @@ class Asset {
   ///
   /// Once you don't need this thumb data it is a good practice to release it,
   /// by calling releaseThumb() method.
-  Future<ByteData> getThumbByteData(int width, int height,
-      {int quality = 100}) async {
+  Future<ByteData> getThumbByteData(int width, int height, {int quality = 100}) async {
     if (width < 0) {
       throw new ArgumentError.value(width, 'width cannot be negative');
     }
@@ -85,21 +84,18 @@ class Asset {
     }
 
     if (quality < 0 || quality > 100) {
-      throw new ArgumentError.value(
-          quality, 'quality should be in range 0-100');
+      throw new ArgumentError.value(quality, 'quality should be in range 0-100');
     }
 
     Completer completer = new Completer<ByteData>();
-    ServicesBinding.instance!.defaultBinaryMessenger
-        .setMessageHandler(_thumbChannel, (ByteData? message) async {
+    ServicesBinding.instance.defaultBinaryMessenger.setMessageHandler(_thumbChannel,
+        (ByteData? message) async {
       completer.complete(message);
-      ServicesBinding.instance!.defaultBinaryMessenger
-          .setMessageHandler(_thumbChannel, null);
+      ServicesBinding.instance.defaultBinaryMessenger.setMessageHandler(_thumbChannel, null);
       return message;
     });
 
-    await MultiImagePicker.requestThumbnail(
-        _identifier, width, height, quality);
+    await MultiImagePicker.requestThumbnail(_identifier, width, height, quality);
     return completer.future as FutureOr<ByteData>;
   }
 
@@ -114,16 +110,14 @@ class Asset {
   /// later again, without need to call this method again.
   Future<ByteData> getByteData({int quality = 100}) async {
     if (quality < 0 || quality > 100) {
-      throw new ArgumentError.value(
-          quality, 'quality should be in range 0-100');
+      throw new ArgumentError.value(quality, 'quality should be in range 0-100');
     }
 
     Completer completer = new Completer<ByteData>();
-    ServicesBinding.instance!.defaultBinaryMessenger
-        .setMessageHandler(_originalChannel, (ByteData? message) async {
+    ServicesBinding.instance.defaultBinaryMessenger.setMessageHandler(_originalChannel,
+        (ByteData? message) async {
       completer.complete(message);
-      ServicesBinding.instance!.defaultBinaryMessenger
-          .setMessageHandler(_originalChannel, null);
+      ServicesBinding.instance.defaultBinaryMessenger.setMessageHandler(_originalChannel, null);
       return message;
     });
 

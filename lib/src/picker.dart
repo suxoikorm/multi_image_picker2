@@ -3,11 +3,9 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
-import 'package:multi_image_picker2/src/exceptions.dart';
 
 class MultiImagePicker {
-  static const MethodChannel _channel =
-      const MethodChannel('multi_image_picker');
+  static const MethodChannel _channel = const MethodChannel('multi_image_picker');
 
   /// Invokes the multi image picker selector.
   ///
@@ -77,7 +75,7 @@ class MultiImagePicker {
         case "PERMISSION_DENIED":
           throw PermissionDeniedException(e.message!);
         case "PERMISSION_PERMANENTLY_DENIED":
-          throw PermissionPermanentlyDeniedExeption(e.message!);
+          throw PermissionPermanentlyDeniedException(e.message!);
         default:
           throw e;
       }
@@ -103,13 +101,11 @@ class MultiImagePicker {
     }
 
     if (quality < 0 || quality > 100) {
-      throw new ArgumentError.value(
-          quality, 'quality should be in range 0-100');
+      throw new ArgumentError.value(quality, 'quality should be in range 0-100');
     }
 
     try {
-      bool? ret = await _channel.invokeMethod(
-          "requestThumbnail", <String, dynamic>{
+      bool? ret = await _channel.invokeMethod("requestThumbnail", <String, dynamic>{
         "identifier": identifier,
         "width": width,
         "height": height,
@@ -123,7 +119,7 @@ class MultiImagePicker {
         case "PERMISSION_DENIED":
           throw PermissionDeniedException(e.message!);
         case "PERMISSION_PERMANENTLY_DENIED":
-          throw PermissionPermanentlyDeniedExeption(e.message!);
+          throw PermissionPermanentlyDeniedException(e.message!);
         default:
           throw e;
       }
@@ -140,8 +136,7 @@ class MultiImagePicker {
   /// The actual image data is sent via BinaryChannel.
   static Future<bool?> requestOriginal(String? identifier, quality) async {
     try {
-      bool? ret =
-          await _channel.invokeMethod("requestOriginal", <String, dynamic>{
+      bool? ret = await _channel.invokeMethod("requestOriginal", <String, dynamic>{
         "identifier": identifier,
         "quality": quality,
       });

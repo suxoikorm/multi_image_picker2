@@ -10,9 +10,9 @@ class PermissionDeniedException implements Exception {
   String toString() => message;
 }
 
-class PermissionPermanentlyDeniedExeption implements Exception {
+class PermissionPermanentlyDeniedException implements Exception {
   final String message;
-  const PermissionPermanentlyDeniedExeption(this.message);
+  const PermissionPermanentlyDeniedException(this.message);
   String toString() => message;
 }
 

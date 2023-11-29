@@ -12,8 +12,7 @@ void main() {
     setUp(() {
       channel.setMockMethodCallHandler((MethodCall methodCall) async {
         log.add(methodCall);
-        if (methodCall.method == 'requestOriginal' ||
-            methodCall.method == 'requestThumbnail') {
+        if (methodCall.method == 'requestOriginal' || methodCall.method == 'requestThumbnail') {
           return true;
         }
         return [
@@ -74,8 +73,7 @@ void main() {
           selectionTextColor: '#ffffff',
         );
 
-        await MultiImagePicker.pickImages(
-            maxImages: 5, cupertinoOptions: cupertinoOptions);
+        await MultiImagePicker.pickImages(maxImages: 5, cupertinoOptions: cupertinoOptions);
 
         expect(
           log,
@@ -103,8 +101,7 @@ void main() {
           useDetailsView: true,
           selectCircleStrokeColor: "#ffffff",
         );
-        await MultiImagePicker.pickImages(
-            maxImages: 5, materialOptions: materialOptions);
+        await MultiImagePicker.pickImages(maxImages: 5, materialOptions: materialOptions);
 
         expect(
           log,
@@ -140,8 +137,7 @@ void main() {
 
       test('throws correct exception when permission denied', () {
         channel.setMockMethodCallHandler((MethodCall methodCall) async {
-          throw PlatformException(
-              code: 'PERMISSION_DENIED', message: 'Some error');
+          throw PlatformException(code: 'PERMISSION_DENIED', message: 'Some error');
         });
 
         expect(
@@ -152,13 +148,12 @@ void main() {
 
       test('throws correct exception when permission permanently denied', () {
         channel.setMockMethodCallHandler((MethodCall methodCall) async {
-          throw PlatformException(
-              code: 'PERMISSION_PERMANENTLY_DENIED', message: 'Some error');
+          throw PlatformException(code: 'PERMISSION_PERMANENTLY_DENIED', message: 'Some error');
         });
 
         expect(
           () => MultiImagePicker.pickImages(maxImages: 10),
-          throwsA(isA<PermissionPermanentlyDeniedExeption>()),
+          throwsA(isA<PermissionPermanentlyDeniedException>()),
         );
       });
     });
